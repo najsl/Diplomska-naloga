@@ -1,0 +1,11 @@
+Dataset/
+
+.env
+
+# Environment secrets
+db/.env
+
+# Docker volumes (if using local bind mounts)
+db/postgres_data/
+db/pgadmin_data/
+

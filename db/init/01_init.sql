@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS staging.accident_person (
     location                  TEXT,             -- Lokacija
     road_type                 TEXT,             -- VrstaCesteNaselja
     road_code                 TEXT,             -- SifraCesteNaselja
-    road_name                 TEXT,             -- TekstCesteNaselja
+    road_name                TEXT,             -- TekstCesteNaselja
     road_section_code         TEXT,             -- SifraOdsekaUlice
     road_section_name         TEXT,             -- TekstOdsekaUlice
     stationing_raw            TEXT,             -- StacionazaDogodka
@@ -453,26 +453,3 @@ BEGIN
             REFERENCES core.weather_observation(observation_id);
     END IF;
 END $$;
-
--- ============================================================================
--- 6. Notes / TODOs
--- ============================================================================
-
--- TODO: Verify coordinate system of pn2009_2023 GeoKoordinataX/Y and set the
---       correct SRID for intermediate geometry (likely EPSG:3794) before
---       transforming to 4326 in core.accident.geom.
---
--- TODO: Implement ETL jobs:
---   - COPY each CSV into staging_raw.*
---   - Parse and filter data rows into staging.* wide tables.
---   - Unpivot wide SURS tables into staging.municipality_year_indicator_long.
---   - Build core.dim_municipality from external reference + SURS names.
---   - Populate core.dim_date and core.dim_time via generated series.
---   - Populate core.dim_holiday from staging.holiday.
---   - Derive core.accident and core.accident_person from staging.accident_person.
---   - Aggregate indicators into core.municipality_year_stats and/or
---     core.municipality_indicator_long.
---
--- TODO: Add check constraints / enums for categorical fields where stable code
---       lists are available (e.g. severity, weather conditions, road type).
-
